@@ -33,7 +33,10 @@ public class ChoferD extends Dao implements IChofer {
             this.conectar();
             String sql="Update CHOFER set NOM_CHOF=?, APE_CHOF=?, DIR_CHOF=? where  COD_CHOF=?";
             PreparedStatement ps=this.getCn().prepareStatement(sql);
-            ps.setInt(1, chofer.getCODIGO());
+            ps.setString(1, chofer.getNOMBRE());
+            ps.setString(2, chofer.getAPELLIDO());
+            ps.setString(3, chofer.getDIRECCION());
+            ps.setString(4, chofer.getCODIGO());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -48,7 +51,7 @@ public class ChoferD extends Dao implements IChofer {
             this.conectar();
             String sql ="Delete from CHOFER where COD_CHOF = ? ";
             PreparedStatement ps = this.getCn().prepareStatement(sql);
-            ps.setInt(1,chofer.getCODIGO());
+            ps.setString(1, chofer.getCODIGO());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -70,6 +73,7 @@ public class ChoferD extends Dao implements IChofer {
             ChoferM chofer;
             while (rs.next()) {
                 chofer = new ChoferM();
+                chofer.setCODIGO(rs.getString("COD_CHOF"));
                 chofer.setNOMBRE(rs.getString("NOM_CHOF"));
                 chofer.setAPELLIDO(rs.getString("APE_CHOF"));
                 chofer.setDIRECCION(rs.getString("DIR_CHOF"));

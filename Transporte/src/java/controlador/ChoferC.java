@@ -18,26 +18,26 @@ public class ChoferC implements Serializable {
     private ChoferM selectedChofer;
     private List<ChoferM> lstChofer;
 
-    
     @PostConstruct
-    public void init() {
+    public void inicio() {
         try {
-           listar();
-           
+            listar();
         } catch (Exception e) {
         }
     }
-    
-    
+
+    public void limpiarChofer() {
+        chofer = new ChoferM();
+    }
 
     public void guardar() {
         ChoferD dao;
         try {
             dao = new ChoferD();
             dao.guardar(chofer);
-            limpiarChofer(); // al momento de guarda limpia el inputText
             listar();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "AGREGADO", null));
+            limpiarChofer(); // al momento de guarda limpia el inputText
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR", null));
         }
@@ -47,8 +47,12 @@ public class ChoferC implements Serializable {
         ChoferD dao;
         try {
             dao = new ChoferD();
-            dao.modificar(chofer);
+            dao.modificar(selectedChofer);
+            listar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "MODIFICADO", null));
         } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR", null));
+            e.getMessage();
         }
     }
 
@@ -56,25 +60,26 @@ public class ChoferC implements Serializable {
         ChoferD dao;
         try {
             dao = new ChoferD();
-            dao.eliminar(chofer);
+            dao.eliminar(selectedChofer);
+            listar();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ELIMINADO", null));
         } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR", null));
+            e.getMessage();
         }
 
     }
 
-    public void listar() throws Exception {
+    public void listar() {
         ChoferD dao;
         try {
             dao = new ChoferD();
             lstChofer = dao.listchofer();
+            
         } catch (Exception e) {
-            throw e;
+            e.getMessage();
         }
     }
-     public void limpiarChofer() {
-        chofer = new ChoferM();
-    }
-
 
     public ChoferM getChofer() {
         return chofer;
@@ -91,6 +96,7 @@ public class ChoferC implements Serializable {
     public void setLstChofer(List<ChoferM> lstChofer) {
         this.lstChofer = lstChofer;
     }
+
     public ChoferM getSelectedChofer() {
         return selectedChofer;
     }

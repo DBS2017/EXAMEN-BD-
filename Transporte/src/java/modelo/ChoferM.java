@@ -1,19 +1,17 @@
-
 package modelo;
 
-
 public class ChoferM {
-    
-    private int CODIGO;
+
+    private String CODIGO;
     private String NOMBRE;
     private String APELLIDO;
     private String DIRECCION;
 
-    public int getCODIGO() {
+    public String getCODIGO() {
         return CODIGO;
     }
 
-    public void setCODIGO(int CODIGO) {
+    public void setCODIGO(String CODIGO) {
         this.CODIGO = CODIGO;
     }
 
@@ -40,5 +38,6 @@ public class ChoferM {
     public void setDIRECCION(String DIRECCION) {
         this.DIRECCION = DIRECCION;
     }
+
     
 }
